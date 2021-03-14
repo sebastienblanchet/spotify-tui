@@ -1148,7 +1148,6 @@ where
     .style(Style::default().fg(app.user_config.theme.text))
     .block(Block::default());
   f.render_widget(top_text, chunks[0]);
-
 }
 
 fn draw_artist_albums<B>(f: &mut Frame<B>, app: &App, layout_chunk: Rect)
