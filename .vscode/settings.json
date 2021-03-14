@@ -1,0 +1,7 @@
+{
+  "files.exclude": {
+    "._target": true,
+    "**/book": true,
+    "**/target": true
+  }
+}
