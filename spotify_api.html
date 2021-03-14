@@ -1,0 +1,387 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Spotify API</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        
+        <link rel="icon" href="favicon.svg">
+        
+        
+        <link rel="shortcut icon" href="favicon.png">
+        
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded "><a href="requirements.html"><strong aria-hidden="true">1.</strong> Requirements</a></li><li class="chapter-item expanded "><a href="theory.html"><strong aria-hidden="true">2.</strong> Theory</a></li><li class="chapter-item expanded "><a href="spotify_api.html" class="active"><strong aria-hidden="true">3.</strong> Spotify API</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
+
+                    <h1 class="menu-title"></h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h2><a class="header" href="#spotify-api" id="spotify-api">Spotify API</a></h2>
+<ul>
+<li><a href="https://developer.spotify.com/documentation/web-api/reference/#endpoint-get-audio-analysis">Developper Reference</a></li>
+<li><a href="https://www.youtube.com/watch?v=goUzHd7cTuA">Audio Analysis with the Spotify Web API</a></li>
+</ul>
+<h3><a class="header" href="#audio-features" id="audio-features">Audio Features</a></h3>
+<p><strong>GET</strong> <code>https://api.spotify.com/v1/audio-features/06AKEBrKUckW0KREUWRnvT</code></p>
+<!-- see img -->
+<pre><code class="language-json">{
+  // normal dist
+  &quot;danceability&quot;: 0.735,
+  &quot;energy&quot;: 0.578,
+  &quot;key&quot;: 5,
+  &quot;loudness&quot;: -11.84,
+  &quot;mode&quot;: 0,
+  // 1 would be like a podcast
+  &quot;speechiness&quot;: 0.0461,
+  // prob dist, that a song is purely acoustiv vs electric or synth
+  &quot;acousticness&quot;: 0.514,
+  &quot;instrumentalness&quot;: 0.0902,
+  &quot;liveness&quot;: 0.159,
+  &quot;valence&quot;: 0.624,
+  &quot;tempo&quot;: 98.002,
+  &quot;type&quot;: &quot;audio_features&quot;,
+  &quot;id&quot;: &quot;06AKEBrKUckW0KREUWRnvT&quot;,
+  &quot;uri&quot;: &quot;spotify:track:06AKEBrKUckW0KREUWRnvT&quot;,
+  &quot;track_href&quot;: &quot;https://api.spotify.com/v1/tracks/06AKEBrKUckW0KREUWRnvT&quot;,
+  &quot;analysis_url&quot;: &quot;https://api.spotify.com/v1/audio-analysis/06AKEBrKUckW0KREUWRnvT&quot;,
+  &quot;duration_ms&quot;: 255349,
+  &quot;time_signature&quot;: 4
+}
+</code></pre>
+<h3><a class="header" href="#audio-analysis" id="audio-analysis">Audio Analysis</a></h3>
+<p><strong>GET</strong> <code>https://api.spotify.com/v1/audio-analysis/somesong</code></p>
+<ul>
+<li><em>time</em>: signature x/y: x beats per bar || measure, y what note gets the beat</li>
+<li><em>beat</em>: is the basic time unit of music (i.e. @ each tick of a metronome ==&gt; tempo)</li>
+<li><em>bar</em>: is segment made upo of beats, bar offsets indicate downbeat (1st of bar)</li>
+<li><em>tatum</em>: smallest pulse we can hear (i.e. in between beats)</li>
+</ul>
+<pre><code class="language-json">{
+  &quot;bars&quot;: [
+      {
+          &quot;start&quot;: 251.98282, // chunk, all estimated
+          &quot;duration&quot;: 0.29765,
+          &quot;confidence&quot;: 0.652
+      }
+      ...
+  ],
+  &quot;beats&quot;: [
+      {
+          &quot;start&quot;: 251.98282,
+          &quot;duration&quot;: 0.29765,
+          &quot;confidence&quot;: 0.652
+      }
+      ...
+  ],
+  // smallest pulse that humans can perceive
+  &quot;tatums&quot;: [
+      {
+          &quot;start&quot;: 251.98282,
+          &quot;duration&quot;: 0.29765,
+          &quot;confidence&quot;: 0.652
+      }
+      ...
+  ],
+  &quot;meta&quot;: {
+      &quot;analyzer_version&quot;: &quot;4.0.0&quot;,
+      &quot;platform&quot;: &quot;Linux&quot;,
+      &quot;detailed_status&quot;: &quot;OK&quot;,
+      &quot;status_code&quot;: 0,
+      &quot;timestamp&quot;: 1456010389,
+      &quot;analysis_time&quot;: 9.1394,
+      &quot;input_process&quot;: &quot;libvorbisfile L+R 44100-&gt;22050&quot;
+  },
+  // theoretical (i.e. verse, bridge, solo)
+  // defined by large variation in rythm timbre
+  // not great as per api dev
+  &quot;sections&quot;: [
+      {
+          &quot;start&quot;: 237.02356,
+          &quot;duration&quot;: 18.32542,
+          &quot;confidence&quot;: 1,
+          &quot;loudness&quot;: -20.074,
+          &quot;tempo&quot;: 98.253,
+          &quot;tempo_confidence&quot;: 0.767,
+          &quot;key&quot;: 5,
+          &quot;key_confidence&quot;: 0.327,
+          &quot;mode&quot;: 1,
+          &quot;mode_confidence&quot;: 0.566,
+          &quot;time_signature&quot;: 4,
+          &quot;time_signature_confidence&quot;: 1
+      }
+      ...
+  ],
+  // set of sound entities &lt;1s w/ relatively uniform timbre &amp;&amp; harmony
+  &quot;segments&quot;: [
+      {
+          &quot;start&quot;: 252.15601,
+          &quot;duration&quot;: 3.19297,
+          &quot;confidence&quot;: 0.522,
+          &quot;loudness_start&quot;: -23.356,
+          &quot;loudness_max_time&quot;: 0.06971, // DB
+          &quot;loudness_max&quot;: -18.121,
+          &quot;loudness_end&quot;: -60,
+          &quot;pitches&quot;: [
+              0.709,
+              0.092,
+              0.196,
+              0.084,
+              0.352,
+              0.134,
+              0.161,
+              1,
+              0.17,
+              0.161,
+              0.211,
+              0.15
+          ],
+          &quot;timbre&quot;: [
+              23.312,
+              -7.374,
+              -45.719,
+              294.874,
+              51.869,
+              -79.384,
+              -89.048,
+              143.322,
+              -4.676,
+              -51.303,
+              -33.274,
+              -19.037
+          ]
+      }
+      ...
+  ],
+  &quot;track&quot;: {
+      &quot;duration&quot;: 255.34898,
+      &quot;sample_md5&quot;: &quot;&quot;,
+      &quot;offset_seconds&quot;: 0,
+      &quot;window_seconds&quot;: 0,
+      &quot;analysis_sample_rate&quot;: 22050,
+      &quot;analysis_channels&quot;: 1,
+      &quot;end_of_fade_in&quot;: 0,
+      &quot;start_of_fade_out&quot;: 251.73333,
+      &quot;loudness&quot;: -11.84,
+      &quot;tempo&quot;: 98.002,
+      &quot;tempo_confidence&quot;: 0.423,
+      &quot;time_signature&quot;: 4,
+      &quot;time_signature_confidence&quot;: 1,
+      &quot;key&quot;: 5,
+      &quot;key_confidence&quot;: 0.36,
+      &quot;mode&quot;: 0,
+      &quot;mode_confidence&quot;: 0.414,
+      &quot;codestring&quot;: &quot;eJxVnAmS5DgOBL-ST-B9_P9j4x7M6qoxW9tpsZQSCeI...&quot;,
+      &quot;code_version&quot;: 3.15,
+      &quot;echoprintstring&quot;: &quot;eJzlvQmSHDmStHslxw4cB-v9j_A-tahhVKV0IH9...&quot;,
+      &quot;echoprint_version&quot;: 4.12,
+      &quot;synchstring&quot;: &quot;eJx1mIlx7ToORFNRCCK455_YoE9Dtt-vmrKsK3EBsTY...&quot;,
+      &quot;synch_version&quot;: 1,
+      &quot;rhythmstring&quot;: &quot;eJyNXAmOLT2r28pZQuZh_xv7g21Iqu_3pCd160xV...&quot;,
+      &quot;rhythm_version&quot;: 1
+  }
+}
+</code></pre>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="theory.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="theory.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+
+    </body>
+</html>
