@@ -1,23 +1,12 @@
 ## Theory
 
-* Client:
-  * use wasm (yew)
-* Backend:
-  * rust
-  * read audio file from spotifyd
-  * extract frequency spectrum/EQ chart
-  * take a list of modifications
-  * read new audio
-  * extract drum info
-  * send array of [kick, tom, snare, overhead, hithat] in REALTIME
-  * GPIO LED
-    * https://github.com/golemparts/rppal#gpio
+### Abbreviations
 
-## EQ
+[Help] (https://en.wikipedia.org/wiki/Glossary_of_music_terminology)
+
+### Drum EQ
 
 From [here](https://jamaddict.com/the-ultimate-drums-eq-chart/)
-
-https://en.wikipedia.org/wiki/Glossary_of_music_terminology
 
 ```json
 [
@@ -73,9 +62,9 @@ https://en.wikipedia.org/wiki/Glossary_of_music_terminology
 * (-1) — 600-800hz
 * (-1) — 2000hz
 
+### Pitches
 
-
-https://www.compadre.org/osp/EJSS/4485/270.htm
+From [here](https://www.compadre.org/osp/EJSS/4485/270.htm)
 
 ```
 v = f\lambda
@@ -522,4 +511,3 @@ v = f\lambda
 * loudness (db)
 * timbre ()
 * temp (bpm)
-

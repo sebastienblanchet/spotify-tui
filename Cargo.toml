@@ -1,15 +1,13 @@
 [package]
 name = "spotify-tui"
 description = "A terminal user interface for Spotify"
-homepage = "https://github.com/Rigellute/spotify-tui"
-documentation = "https://github.com/Rigellute/spotify-tui"
-repository = "https://github.com/Rigellute/spotify-tui"
-keywords = ["spotify", "tui", "cli", "terminal"]
-categories = ["command-line-utilities"]
-version = "0.23.0"
-authors = ["Alexander Keliris <rigellute@gmail.com>"]
+version = "0.1.0"
+authors = ["Seb Blanchet <s3blanch@edu.uwaterloo.ca>"]
+documentation = "https://github.com/sebastienblanchet/spotify-tui"
+repository = "https://github.com/sebastienblanchet/spotify-tui"
+keywords = ["spotify", "drums"]
 edition = "2018"
-license = "MIT OR Apache-2.0"
+license = "MIT"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
